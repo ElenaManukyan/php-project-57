@@ -18,7 +18,7 @@ jobs:
         with:
           php-version: '8.4'
           extensions: mbstring, dom, curl, libxml, pdo, sqlite, pdo_sqlite, bcmath, zip
-          coverage: none
+          coverage: xdebug
 
       - name: Install Dependencies
         run: composer install
@@ -27,4 +27,6 @@ jobs:
         run: composer exec phpcs -- --standard=PSR12 app tests
 
       - name: Run Tests
-        run: php artisan test
+        run: |
+          mkdir -p build/logs
+          php artisan test --coverage-clover build/logs/clover.xml
