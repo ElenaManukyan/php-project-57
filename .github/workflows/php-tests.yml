@@ -1,0 +1,30 @@
+name: PHP Tests and Linter
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  php-analysis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, dom, curl, libxml, pdo, sqlite, pdo_sqlite, bcmath, zip
+          coverage: none
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Run Linter
+        run: composer exec phpcs -- --standard=PSR12 app tests
+
+      - name: Run Tests
+        run: php artisan test
