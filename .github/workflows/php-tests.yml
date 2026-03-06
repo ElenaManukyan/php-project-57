@@ -20,13 +20,26 @@ jobs:
           extensions: mbstring, dom, curl, libxml, pdo, sqlite, pdo_sqlite, bcmath, zip
           coverage: xdebug
 
-      - name: Install Dependencies
+      - name: Install PHP Dependencies
         run: composer install
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install NPM Dependencies
+        run: npm ci
+
+      - name: Build Assets (Vite)
+        run: npm run build
 
       - name: Run Linter
         run: composer exec phpcs -- --standard=PSR12 app tests
 
       - name: Run Tests
         run: |
+          # Создаем ключ приложения, иначе тесты упадут с ошибкой безопасности
+          php artisan key:generate
           mkdir -p build/logs
           php artisan test --coverage-clover build/logs/clover.xml
