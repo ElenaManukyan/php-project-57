@@ -2,6 +2,8 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    <h2>{{ __('views.login.header') }}</h2>
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -14,7 +16,7 @@
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('views.login.password')" />
 
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
@@ -39,8 +41,8 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+            <x-primary-button class="ms-3 bg-blue-600 hover:bg-blue-700 active:bg-blue-900 focus:ring-blue-500">
+                {{ __('views.login.submit') }}
             </x-primary-button>
         </div>
     </form>
