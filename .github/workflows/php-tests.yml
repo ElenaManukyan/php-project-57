@@ -23,6 +23,9 @@ jobs:
       - name: Install PHP Dependencies
         run: composer install
 
+      - name: Prepare Environment
+        run: cp .env.example .env
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -39,7 +42,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          # Создаем ключ приложения, иначе тесты упадут с ошибкой безопасности
+          # Теперь .env существует, и ключ будет успешно сгенерирован
           php artisan key:generate
           mkdir -p build/logs
           php artisan test --coverage-clover build/logs/clover.xml
