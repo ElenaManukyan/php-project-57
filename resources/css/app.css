@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Переопределяем фокус для всех инпутов, селектов и т.д. */
+/* @layer utilities {
+  input:focus,
+  select:focus,
+  textarea:focus {
+    --tw-ring-color: theme('colors.green.500') !important;
+    --tw-ring-opacity: 0.4 !important;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: theme('colors.green.500') !important;
+  }
+} */

@@ -1,2 +1,2 @@
 start:
-	php artisan serve
+	php artisan serve & npm run dev
