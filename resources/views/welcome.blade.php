@@ -21,50 +21,84 @@
     </head>
     <body class="antialiased">
         <div id="app">
-            <header class="fixed w-full bg-white shadow-sm z-50">
-                <div class="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
-                    <div class="text-xl font-bold text-gray-800">
-                        <a href="/">Менеджер задач</a>
-                    </div>
+            <header class="fixed w-full">
+                <nav class="bg-white border-gray-200 py-2.5 dark:bg-gray-900 shadow-md">
+                    <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
+                        
+                        <a href="/" class="flex items-center">
+                            <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+                                Менеджер задач
+                            </span>
+                        </a>
 
-                    @if (Route::has('login'))
-                        <nav class="flex gap-2">
-                            @auth
-                                <a href="{{ url('/dashboard') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-medium transition">
-                                    Dashboard
-                                </a>
-                            @else
-                                <a href="{{ route('login') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-medium transition">
-                                    Вход
-                                </a>
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded font-medium transition">
-                                        Регистрация
+                        @if (Route::has('login'))
+                            <div class="flex items-center lg:order-2">
+                                @auth
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <a href="{{ route('logout') }}" 
+                                        onclick="event.preventDefault(); this.closest('form').submit();"
+                                        class="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 transition">
+                                            Выход
+                                        </a>
+                                    </form>
+                                @else
+                                    <a href="{{ route('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 transition">
+                                        Вход
                                     </a>
-                                @endif
-                            @endauth
-                        </nav>
-                    @endif
-                </div>
+                                    @if (Route::has('register'))
+                                        <a href="{{ route('register') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 transition">
+                                            Регистрация
+                                        </a>
+                                    @endif
+                                @endauth
+                            </div>
+                        @endif
+
+                        <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1">
+                            <ul class="flex flex-col mt-4 font-light lg:flex-row lg:space-x-8 lg:mt-0">
+                                <li>
+                                    <a href="" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
+                                        Задачи
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
+                                        Статусы
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
+                                        Метки
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </nav>
             </header>
 
-            <section class="bg-white dark:bg-gray-900 pt-20">
+            <section class="bg-white dark:bg-gray-900">
                 <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 lg:pt-28">
-                    <div class="mr-auto place-self-center lg:col-span-7">
-                        <h1 class="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
+                    <div class="mr-auto place-self-center lg:col-span-7 pt-2">
+                        <h1 class="max-w-2xl mb-4 text-4xl font-semibold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
                             Привет от Хекслета!
                         </h1>
-                        <p class="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                        <p class="max-w-2xl mb-6 font-normal text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
                             Это простой менеджер задач на Laravel
                         </p>
-                        <button class="bg-white text-black border border-gray-300 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition shadow-sm">
+                        <a href="https://hexlet.io"
+                           class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                           target="_blank"
+                        >
                             Нажми меня
-                        </button>
+                        </a>
                     </div>
                 </div>
             </section>
         </div>
 
-        <div class="bg-white min-h-[400px]"></div>
+        <div class="bg-white min-h-[200px]"></div>
     </body>
 </html>

@@ -23,7 +23,7 @@
                     !block
                     !text-sm
                     !font-normal
-                    !text-gray-900
+                    !text-gray-600
                 "
                 for="email"
                 :value="__('Email')"
@@ -61,7 +61,7 @@
                     !block
                     !text-sm
                     !font-normal
-                    !text-gray-900
+                    !text-gray-600
                 "
                 for="password"
                 :value="__('Пароль')"
@@ -139,7 +139,7 @@
             <x-primary-button class="
                 inline-flex items-center
                 bg-blue-500 hover:bg-blue-700
-                text-white font-bold
+                text-white font-medium
                 rounded
                 box-content
                 !w-[48px]
