@@ -28,7 +28,7 @@ class TaskStatusControllerTest extends TestCase
     public function testStore()
     {
         $data = ['name' => 'В работе'];
-        
+
         $response = $this->actingAs($this->user)
             ->post(route('task_statuses.store'), $data);
 
