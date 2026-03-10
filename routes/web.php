@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskStatusController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,5 +17,12 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::resource('task_statuses', TaskStatusController::class)
+    ->middleware('auth')
+    ->except(['index']);
+
+Route::get('task_statuses', [TaskStatusController::class, 'index'])
+    ->name('task_statuses.index');
 
 require __DIR__ . '/auth.php';
