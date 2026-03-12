@@ -12,8 +12,8 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        $statuses = TaskStatus::all();
-        return view('task_statuses.index', compact('statuses'));
+        $taskStatuses = TaskStatus::all();
+        return view('task_statuses.index', compact('taskStatuses'));
     }
 
     /**
@@ -71,7 +71,18 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
+        $protectedNames = ['новый', 'в работе', 'на тестировании', 'завершен'];
+
+        if (in_array($taskStatus->name, $protectedNames)) {
+            return redirect()
+                ->route('task_statuses.index')
+                ->with('error', 'Не удалось удалить статус');
+        }
+
         $taskStatus->delete();
-        return redirect()->route('task_statuses.index');
+        
+        return redirect()
+            ->route('task_statuses.index')
+            ->with('success', 'Статус успешно удален');
     }
 }

@@ -1,21 +1,21 @@
 <x-app-layout>
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div class="grid col-span-full">
-                <h1 class="mb-5 text-5xl line-height-1 shadow-sm">Создать статус</h1>
+            <div class="grid col-span-full pt-16">
+                <h1 class="mb-5 text-5xl line-height-1 shadow-sm text-gray-300">Создать статус</h1>
 
-                <form method="POST" action="{{ route('task_statuses.store') }}" class="w-full max-w-sm">
+                <form method="POST" action="{{ route('task_statuses.store') }}" class="w-full max-w-sm text-gray-300">
                     @csrf
                     <div class="flex flex-col">
                         <label for="name">Имя</label>
-                        <input class="rounded border border-gray-300 w-full p-2 mt-2" type="text" name="name" id="name" value="{{ old('name') }}">
+                        <input class="rounded border border-gray-300 w-full p-2 mt-2 text-black" type="text" name="name" id="name" value="{{ old('name') }}">
                         
                         @error('name')
                             <div class="text-red-500 mt-2">{{ $message }}</div>
                         @enderror
 
-                        <div class="mt-5">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <div class="mt-2">
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
                                 Создать
                             </button>
                         </div>
