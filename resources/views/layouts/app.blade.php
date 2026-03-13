@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans antialiased">
 
-        <header class="fixed w-full z-50">
+        <header class="w-full">
             <nav class="bg-white border-gray-200 py-5 dark:bg-gray-900 shadow-md">
                 <div class="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto">
                     
@@ -51,7 +51,7 @@
                     @endif
 
                     <div class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1">
-                        <ul class="flex flex-col mt-4 font-light lg:flex-row lg:space-x-8 lg:mt-0">
+                        <ul class="flex flex-col mt-4 font-normal text-gray-300 lg:flex-row lg:space-x-8 lg:mt-0">
                             <li>
                                 <a href="" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
                                     Задачи
@@ -73,32 +73,33 @@
                 </div>
             </nav>
         </header>
-        <div class="min-h-screen bg-gray-100">      
+        <div class="bg-gray-100">      
             <main class="mx-auto w-full">
                 <div class="relative">
-                    @if (session('error') || session('success'))
-                        <div 
-                            x-data="{ show: true }" 
-                            x-show="show"
-                            x-transition:enter="transition ease-out duration-300"
-                            x-transition:enter-start="opacity-0 transform -translate-y-2 max-h-0"
-                            x-transition:enter-end="opacity-100 transform translate-y-0 max-h-40"
-                            x-transition:leave="transition ease-in duration-300"
-                            x-transition:leave-start="opacity-100 max-h-40"
-                            x-transition:leave-end="opacity-0 max-h-0"
-                            class="relative" 
-                        >
-                            <div class="relative z-50 overflow-hidden top-50 p-4 mx-auto mt-2 mb-2 text-sm rounded-lg shadow-2xl w-fit {{ session('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800' }}" role="alert">
-                                <span class="font-medium">
-                                    {{ session('error') ?? session('success') }}
-                                </span>
-                            </div>
-                        </div>
-                    @endif
+                    <div class="dark:bg-gray-900">
+                        @if (session()->has('flash_notification'))
+                            @foreach (session('flash_notification') as $message)
+                                <div 
+                                    x-data="{ show: true }" 
+                                    x-show="show"
+                                    x-transition:enter="transition ease-out duration-300"
+                                    x-transition:enter-start="opacity-0 -mt-16"
+                                    x-transition:enter-end="opacity-100 mt-0"
+                                    x-transition:leave="transition ease-in duration-300"
+                                    x-transition:leave-start="opacity-100 mt-0"
+                                    x-transition:leave-end="opacity-0 mt-0"
+                                    class="ml-36 p-4 text-sm rounded-lg shadow-md flex items-center gap-3 w-fit {{ $message->level === 'danger' ? 'bg-red-200 text-red-800' : 'bg-green-200 text-green-800' }}"
+                                >
+                                    <span>{{ $message->message }}</span>
+                                    <button @click="show = false" class="text-lg leading-none opacity-50 hover:opacity-100">&times;</button>
+                                </div>
+                            @endforeach
+                        @endif
 
-                    <div class="relative z-0">
+
                         {{ $slot }}
                     </div>
+                </div>
                 </div>
             </main>
         </div>

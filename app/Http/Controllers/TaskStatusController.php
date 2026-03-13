@@ -34,6 +34,9 @@ class TaskStatusController extends Controller
         ]);
 
         TaskStatus::create($data);
+        
+        flash('Статус успешно создан')->success();
+
         return redirect()->route('task_statuses.index');
     }
 
@@ -63,6 +66,9 @@ class TaskStatusController extends Controller
         ]);
 
         $taskStatus->update($data);
+        
+        flash('Статус успешно изменен')->success();
+
         return redirect()->route('task_statuses.index');
     }
 
@@ -74,15 +80,14 @@ class TaskStatusController extends Controller
         $protectedNames = ['новый', 'в работе', 'на тестировании', 'завершен'];
 
         if (in_array($taskStatus->name, $protectedNames)) {
-            return redirect()
-                ->route('task_statuses.index')
-                ->with('error', 'Не удалось удалить статус');
+            flash('Не удалось удалить статус')->error();
+            return redirect()->route('task_statuses.index');
         }
 
         $taskStatus->delete();
         
-        return redirect()
-            ->route('task_statuses.index')
-            ->with('success', 'Статус успешно удален');
+        flash('Статус успешно удален')->success();
+        
+        return redirect()->route('task_statuses.index');
     }
 }

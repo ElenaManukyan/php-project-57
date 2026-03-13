@@ -1,7 +1,7 @@
 <x-app-layout>
     <section class="bg-white dark:bg-gray-900">
-        <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div class="grid col-span-full pt-10">
+        <div class="grid max-w-screen-xl px-4 pt-2 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 lg:grid-cols-12">
+            <div class="grid col-span-full">
                 <h1 class="mb-8 text-5xl line-height-1 shadow-sm text-gray-300">Статусы</h1>
 
                 @auth

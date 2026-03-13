@@ -1,10 +1,10 @@
 <x-app-layout>
     <section class="bg-white dark:bg-gray-900">
-        <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12 text-gray-300">
-            <div class="grid col-span-full pt-16">
-                <h1 class="mb-5 text-5xl line-height-1 shadow-sm">Изменение статуса</h1>
+        <div class="grid max-w-screen-xl px-4 pt-2 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+            <div class="grid col-span-full">
+                <h1 class="mb-5 text-5xl line-height-1 shadow-sm text-gray-300">Изменение статуса</h1>
 
-                <form method="POST" action="{{ route('task_statuses.update', $taskStatus) }}" class="w-full max-w-sm">
+                <form method="POST" action="{{ route('task_statuses.update', $taskStatus) }}" class="w-full max-w-sm pt-2 text-gray-300">
                     @csrf
                     @method('PATCH')
                     

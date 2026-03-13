@@ -1,10 +1,10 @@
 <x-app-layout>
     <section class="bg-white dark:bg-gray-900">
-        <div class="grid max-w-screen-xl px-4 pt-20 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div class="grid col-span-full pt-16">
+        <div class="grid max-w-screen-xl px-4 pt-2 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+            <div class="grid col-span-full">
                 <h1 class="mb-5 text-5xl line-height-1 shadow-sm text-gray-300">Создать статус</h1>
 
-                <form method="POST" action="{{ route('task_statuses.store') }}" class="w-full max-w-sm text-gray-300">
+                <form method="POST" action="{{ route('task_statuses.store') }}" class="w-full max-w-sm text-gray-300 pt-2">
                     @csrf
                     <div class="flex flex-col">
                         <label for="name">Имя</label>
