@@ -22,7 +22,7 @@
                     
                     <a href="/" class="flex items-center">
                         <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-                            Менеджер задач
+                            {{ __('layouts.app.name') }}
                         </span>
                     </a>
 
@@ -34,16 +34,16 @@
                                     <a href="{{ route('logout') }}" 
                                     onclick="event.preventDefault(); this.closest('form').submit();"
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded ml-2 !w-[50px] !h-[24px]">
-                                        Выход
+                                        {{ __('layouts.app.logout') }}
                                     </a>
                                 </form>
                             @else
                                 <a href="{{ route('login') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 transition">
-                                    Вход
+                                    {{ __('layouts.app.login') }}
                                 </a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 transition">
-                                        Регистрация
+                                        {{ __('layouts.app.registration') }}
                                     </a>
                                 @endif
                             @endauth
@@ -54,17 +54,17 @@
                         <ul class="flex flex-col mt-4 font-normal text-gray-300 lg:flex-row lg:space-x-8 lg:mt-0">
                             <li>
                                 <a href="" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
-                                    Задачи
+                                    {{ __('layouts.app.tasks') }}
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('task_statuses.index') }}" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
-                                    Статусы
+                                    {{ __('layouts.app.statuses') }}
                                 </a>
                             </li>
                             <li>
                                 <a href="" class="block py-2 pl-3 pr-4 text-gray-700 hover:text-blue-700 lg:p-0">
-                                    Метки
+                                    {{ __('layouts.app.labels') }}
                                 </a>
                             </li>
                         </ul>

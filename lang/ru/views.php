@@ -1,24 +1,39 @@
 <?php
 
 return [
-    'article' => [
+    'statuses' => [
         'index' => [
-            'list' => 'Список постов',
+            'create_button' => 'Создать статус',
+            'id' => 'ID',
+            'name' => 'Имя',
+            'created_at' => 'Дата создания',
             'actions' => 'Действия',
-            'addNewArticle' => 'Добавить новый пост',
-            'buttons' => [
-                'edit' => 'Изменить',
-                'delete' => 'Удалить'
-            ]
-        ]
+            'edit' => 'Изменить',
+            'delete' => 'Удалить',
+        ],
+        'create' => [
+            'submit' => 'Создать',
+        ],
+        'edit' => [
+            'header' => 'Изменение статуса',
+            'submit' => 'Обновить',
+        ],
     ],
-
-    'login' => [
-        'header' => 'Менеджер задач',
-        'email' => 'Email',
-        'password' => 'Пароль',
-        'remember_me' => 'Запомнить меня',
-        'forgot_password' => 'Забыли пароль?',
-        'submit' => 'Войти',
+    'tasks' => [
+        'index' => [
+            'header' => 'Задачи',
+            'create_button' => 'Создать задачу',
+            'filter_status' => 'Статус',
+            'filter_author' => 'Автор',
+            'filter_executor' => 'Исполнитель',
+            'apply' => 'Применить',
+        ],
+        'create' => [
+            'header' => 'Создать задачу',
+            'description' => 'Описание',
+            'status' => 'Статус',
+            'executor' => 'Исполнитель',
+            'labels' => 'Метки',
+        ]
     ],
 ];

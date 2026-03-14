@@ -8,7 +8,7 @@
                 no-underline
                 text-inherit
             ">
-            Менеджер задач
+            {{ __('layouts.app.name') }}
         </a>
     </h2>
 
@@ -18,7 +18,7 @@
         <div>
             <x-input-label
                 for="name"
-                value="Имя"
+                value="{{ __('views.statuses.index.name') }}"
                 class="
                     !block
                     !text-sm

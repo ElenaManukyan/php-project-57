@@ -51,8 +51,8 @@
                     </x-dropdown>
                 @else
                     <div class="space-x-4">
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Вход</a>
-                        <a href="{{ route('register') }}" class="text-sm text-gray-700 underline">Регистрация</a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">{{ __('layouts.app.login') }}</a>
+                        <a href="{{ route('register') }}" class="text-sm text-gray-700 underline">{{ __('layouts.app.registration') }}</a>
                     </div>
                 @endauth
             </div>

@@ -9,7 +9,7 @@
                     @method('PATCH')
                     
                     <div class="flex flex-col">
-                        <label for="name">Имя</label>
+                        <label for="name">{{ __('views.statuses.index.name') }}</label>
                         <input class="rounded border border-gray-300 w-full p-2 mt-2 text-black" type="text" name="name" id="name" value="{{ old('name', $taskStatus->name) }}">
                         
                         @error('name')

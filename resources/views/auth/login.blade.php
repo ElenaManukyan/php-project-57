@@ -8,7 +8,7 @@
                 no-underline
                 text-inherit
             ">
-            Менеджер задач
+            {{ __('layouts.app.name') }}
         </a>
     </h2>
 

@@ -2,8 +2,12 @@
 
 return [
     'app' => [
-        'articles' => 'Articles',
-        'about' => 'About',
-        'home' => 'Home'
-    ]
+        'name' => 'Task Manager',
+        'tasks' => 'Tasks',
+        'statuses' => 'Statuses',
+        'labels' => 'Labels',
+        'login' => 'Login',
+        'registration' => 'Register',
+        'logout' => 'Logout',
+    ],
 ];
