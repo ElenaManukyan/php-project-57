@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskStatusController;
+use App\Http\Controllers\TaskController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,5 +25,10 @@ Route::resource('task_statuses', TaskStatusController::class)
 
 Route::get('task_statuses', [TaskStatusController::class, 'index'])
     ->name('task_statuses.index');
+
+Route::resource('tasks', TaskController::class)->middleware('auth')->except(['index']);
+
+Route::get('tasks', [TaskController::class, 'index'])
+    ->name('tasks.index');
 
 require __DIR__ . '/auth.php';

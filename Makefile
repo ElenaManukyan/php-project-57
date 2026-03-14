@@ -3,3 +3,6 @@ start:
 
 test:
 	php artisan test
+
+migrate:
+	php artisan migrate
