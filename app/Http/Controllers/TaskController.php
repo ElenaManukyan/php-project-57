@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
+use App\Models\Label;
 use Illuminate\Http\Request;
 // use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -25,8 +26,9 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::all();
         $users = User::all();
+        $labels = Label::all();
 
-        return view('tasks.create', compact('statuses', 'users'));
+        return view('tasks.create', compact('statuses','users','labels'));
     }
 
     /**
@@ -39,11 +41,17 @@ class TaskController extends Controller
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
             'assigned_to_id' => ['nullable', 'exists:users,id'],
+            'labels' => ['nullable', 'array'],
+            'labels.*' => ['exists:labels,id'],
         ]);
 
         $data['created_by_id'] = auth()->id();
 
-        Task::create($data);
+        $task = Task::create($data);
+
+        if (!empty($data['labels'])) {
+            $task->labels()->sync($data['labels']);
+        }
 
         flash('Задача успешно создана')->success();
 
@@ -53,9 +61,11 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task) 
-    { 
-        return view('tasks.show', ['task' => $task->load(['status', 'author', 'assignee'])]); 
+    public function show(Task $task)
+    {
+        return view('tasks.show', [
+            'task' => $task->load(['status', 'author', 'assignee', 'labels'])
+        ]);
     }
 
     /**
@@ -65,19 +75,10 @@ class TaskController extends Controller
     {
         $statuses = TaskStatus::all();
         $users = User::all();
+        $labels = Label::all(); // <- добавляем
 
-        return view('tasks.edit', compact('task', 'statuses', 'users'));
+        return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
-    // public function edit(Task $task) 
-    // {
-    //     $this->authorize('update', $task);
-
-    //     return view('tasks.edit', [
-    //         'task'     => $task,
-    //         'statuses' => TaskStatus::all(),
-    //         'users'    => User::all()
-    //     ]); 
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -101,8 +102,14 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        //
+        $task->labels()->detach();
+
+        $task->delete();
+
+        flash('Задача успешно удалена')->success();
+
+        return redirect()->route('tasks.index');
     }
 }

@@ -54,6 +54,20 @@
                             </select>
                         </div>
 
+                        <!-- Метки -->
+                        <div>
+                            <label for="marks">{{ __('views.tasks.create.labels') }}</label>
+                            <select name="labels[]" id="marks" class="rounded border-gray-300 w-full h-32 text-black" multiple>
+                                @foreach($labels as $label)
+                                    <option value="{{ $label->id }}"
+                                        @if(isset($task) && $task->labels->contains($label->id)) selected @endif
+                                    >
+                                        {{ $label->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div>
                             <button type="submit" 
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded">

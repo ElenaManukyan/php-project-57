@@ -6,3 +6,9 @@ test:
 
 migrate:
 	php artisan migrate
+
+rebuild:
+	npm install && npm run build
+
+clear-cashe:
+	php artisan view:clear && php artisan cache:clear

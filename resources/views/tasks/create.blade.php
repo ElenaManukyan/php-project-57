@@ -53,13 +53,16 @@
                         </div>
 
                         <!-- Метки -->
-                         <div>
+                        <div>
                             <label for="marks">{{ __('views.tasks.create.labels') }}</label>
-                            <select id="marks" class="rounded border-gray-300 w-full h-32 text-black" name="labels[]" id="labels[]" multiple="">
-                                <option value="1">ошибка</option>
-                                <option value="2">документация</option>
-                                <option value="3">дубликат</option>
-                                <option value="4">доработка</option>
+                            <select name="labels[]" id="marks" class="rounded border-gray-300 w-full h-32 text-black" multiple>
+                                @foreach($labels as $label)
+                                    <option value="{{ $label->id }}"
+                                        @if(isset($task) && $task->labels->contains($label->id)) selected @endif
+                                    >
+                                        {{ $label->name }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
 

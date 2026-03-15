@@ -46,14 +46,14 @@
                                 <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
                                     {{ __('views.statuses.index.edit') }}
                                 </a>
-                                <!-- <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline ml-3">
+                                <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline ml-3">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-900" 
                                             onclick="return confirm('{{ __('views.tasks.index.confirm_delete') }}')">
                                         {{ __('views.tasks.index.delete') }}
                                     </button>
-                                </form> -->
+                                </form>
                                 @endif
                             </td>
                             @endauth
