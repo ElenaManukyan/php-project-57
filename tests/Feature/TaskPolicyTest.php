@@ -58,7 +58,7 @@ class TaskPolicyTest extends TestCase
 
         $this->assertTrue($policy->update($owner, $task));
         $this->assertFalse($policy->update($user, $task));
-        
+
         $this->assertTrue($policy->delete($owner, $task));
         $this->assertFalse($policy->delete($user, $task));
     }
