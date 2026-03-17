@@ -81,4 +81,39 @@ class TaskControllerTest extends TestCase
         $response->assertSessionHasErrors(['name', 'status_id']);
         $this->assertDatabaseCount('tasks', 0);
     }
+
+    public function testCreate()
+    {
+        $response = $this->actingAs($this->user)->get(route('tasks.create'));
+        $response->assertOk();
+    }
+
+    public function testShow()
+    {
+        $task = Task::factory()->create();
+        $response = $this->get(route('tasks.show', $task));
+        $response->assertOk();
+    }
+
+    public function testEdit()
+    {
+        $task = Task::factory()->create(['created_by_id' => $this->user->id]);
+        $response = $this->actingAs($this->user)->get(route('tasks.edit', $task));
+        $response->assertOk();
+    }
+
+    public function testUpdate()
+    {
+        $task = Task::factory()->create(['created_by_id' => $this->user->id]);
+        $data = [
+            'name' => 'Updated Task',
+            'status_id' => $this->status->id,
+        ];
+
+        $response = $this->actingAs($this->user)
+            ->patch(route('tasks.update', $task), $data);
+
+        $response->assertRedirect(route('tasks.index'));
+        $this->assertDatabaseHas('tasks', ['name' => 'Updated Task']);
+    }
 }

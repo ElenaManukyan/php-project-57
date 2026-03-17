@@ -55,4 +55,29 @@ class LabelControllerTest extends TestCase
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseHas('labels', ['id' => $label->id]);
     }
+
+    public function testCreate()
+    {
+        $response = $this->actingAs($this->user)->get(route('labels.create'));
+        $response->assertOk();
+    }
+
+    public function testEdit()
+    {
+        $label = Label::factory()->create();
+        $response = $this->actingAs($this->user)->get(route('labels.edit', $label));
+        $response->assertOk();
+    }
+
+    public function testUpdate()
+    {
+        $label = Label::factory()->create();
+        $data = ['name' => 'Updated Label'];
+
+        $response = $this->actingAs($this->user)
+            ->patch(route('labels.update', $label), $data);
+
+        $response->assertRedirect(route('labels.index'));
+        $this->assertDatabaseHas('labels', $data);
+    }
 }
