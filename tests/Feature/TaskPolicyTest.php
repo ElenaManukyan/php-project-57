@@ -62,4 +62,17 @@ class TaskPolicyTest extends TestCase
         $this->assertTrue($policy->delete($owner, $task));
         $this->assertFalse($policy->delete($user, $task));
     }
+
+    public function testTaskPolicyAllMethods()
+    {
+        $policy = new TaskPolicy();
+        $user = User::factory()->create();
+        $task = Task::factory()->create(['created_by_id' => $user->id]);
+
+        $this->assertTrue($policy->viewAny($user));
+        $this->assertTrue($policy->view($user, $task));
+        $this->assertTrue($policy->create($user));
+        $this->assertTrue($policy->update($user, $task));
+        $this->assertTrue($policy->delete($user, $task));
+    }
 }
