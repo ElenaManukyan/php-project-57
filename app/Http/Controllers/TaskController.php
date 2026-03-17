@@ -7,6 +7,7 @@ use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
 use Illuminate\Http\Request;
+
 // use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller
@@ -14,9 +15,9 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() 
-    { 
-        return view('tasks.index', ['tasks' => Task::with(['status', 'author', 'assignee'])->get()]); 
+    public function index()
+    {
+        return view('tasks.index', ['tasks' => Task::with(['status', 'author', 'assignee'])->get()]);
     }
 
     /**
@@ -28,7 +29,7 @@ class TaskController extends Controller
         $users = User::all();
         $labels = Label::all();
 
-        return view('tasks.create', compact('statuses','users','labels'));
+        return view('tasks.create', compact('statuses', 'users', 'labels'));
     }
 
     /**
