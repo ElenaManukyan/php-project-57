@@ -1,19 +1,27 @@
 <x-app-layout>
-    <section class="bg-white dark:bg-gray-900">
+    <section class="bg-white dark:bg-gray-900 text-gray-300">
         <div class="max-w-screen-xl mx-auto px-6 py-12">
 
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center justify-start mb-8">
                 <h1 class="text-4xl font-semibold">
-                    {{ __('Просмотр задачи') }}: {{ $task->name }}
+                    {{ __('views.tasks.index.show') }}: {{ $task->name }}
                 </h1>
 
-                <span class="text-2xl opacity-70">⚙️</span>
+                @if(auth()->id() === $task->created_by_id)
+                    <a href="{{ route('tasks.edit', $task) }}" 
+                    title="{{ __('Редактировать') }}" 
+                    class="text-4xl opacity-70 hover:opacity-100 transition-opacity ml-4">
+                        ⚙️
+                    </a>
+                @else
+                    <span class="text-4xl opacity-20" title="{{ __('Авторизуйтесь или зарегистрируйтесь, чтобы редактировать задачу') }}">⚙️</span>
+                @endif
             </div>
 
             <div class="space-y-3 text-lg">
-                <p><span class="font-semibold">{{ __('views.tasks.show.name') }}:</span> {{ $task->name }}</p>
-                <p><span class="font-semibold">{{ __('views.tasks.show.status') }}:</span> {{ $task->status->name }}</p>
-                <p><span class="font-semibold">{{ __('views.tasks.show.description') }}:</span> {{ $task->description ?? '—' }}</p>
+                <p><span class="font-semibold">{{ __('views.statuses.index.name') }}:</span> {{ $task->name }}</p>
+                <p><span class="font-semibold">{{ __('views.tasks.create.status') }}:</span> {{ $task->status->name }}</p>
+                <p><span class="font-semibold">{{ __('views.tasks.create.description') }}:</span> {{ $task->description ?? '—' }}</p>
                 <!-- Метки -->
                 <div class="mt-6 flex flex-wrap gap-2">
                     @foreach($task->labels as $label)
@@ -26,15 +34,6 @@
                     @endforeach
                 </div>
             </div>
-
-            @if(auth()->id() === $task->created_by_id)
-                <div class="mt-8">
-                    <a href="{{ route('tasks.edit', $task) }}" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-medium">
-                        {{ __('Редактировать') }}
-                    </a>
-                </div>
-            @endif
-
         </div>
     </section>
 </x-app-layout>

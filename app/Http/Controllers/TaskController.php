@@ -49,9 +49,7 @@ class TaskController extends Controller
 
         $task = Task::create($data);
 
-        if (!empty($data['labels'])) {
-            $task->labels()->sync($data['labels']);
-        }
+        $task->labels()->sync($data['labels']);
 
         flash('Задача успешно создана')->success();
 
@@ -90,9 +88,14 @@ class TaskController extends Controller
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
             'assigned_to_id' => ['nullable', 'exists:users,id'],
+            'labels' => ['nullable', 'array'],
+            'labels.*' => ['exists:labels,id'],
         ]);
 
         $task->update($data);
+
+        $labels = $request->input('labels', []);
+        $task->labels()->sync($labels);
 
         flash('Задача успешно обновлена')->success();
 
@@ -104,6 +107,10 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
+        if (auth()->id() !== $task->created_by_id) {
+            abort(403);
+        }
+
         $task->labels()->detach();
 
         $task->delete();

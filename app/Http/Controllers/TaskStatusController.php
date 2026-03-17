@@ -77,9 +77,9 @@ class TaskStatusController extends Controller
      */
     public function destroy(TaskStatus $taskStatus)
     {
-        $protectedNames = ['новый', 'в работе', 'на тестировании', 'завершен'];
+        // $protectedNames = ['новый', 'в работе', 'на тестировании', 'завершен'];
 
-        if (in_array($taskStatus->name, $protectedNames)) {
+        if (/* in_array($taskStatus->name, $protectedNames) || */ $taskStatus->tasks()->exists()) {
             flash('Не удалось удалить статус')->error();
             return redirect()->route('task_statuses.index');
         }

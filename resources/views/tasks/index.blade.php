@@ -51,7 +51,7 @@
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-900" 
                                             onclick="return confirm('{{ __('views.tasks.index.confirm_delete') }}')">
-                                        {{ __('views.tasks.index.delete') }}
+                                        {{ __('views.statuses.index.delete') }}
                                     </button>
                                 </form>
                                 @endif
