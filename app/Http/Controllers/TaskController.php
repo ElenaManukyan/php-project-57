@@ -72,9 +72,13 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
+        if (auth()->id() !== $task->created_by_id) {
+            abort(403);
+        }
+
         $statuses = TaskStatus::all();
         $users = User::all();
-        $labels = Label::all(); // <- добавляем
+        $labels = Label::all();
 
         return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
@@ -84,6 +88,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
+        if (auth()->id() !== $task->created_by_id) {
+            abort(403);
+        }
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
