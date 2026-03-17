@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Task;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Policies\TaskPolicy;
 
 class TaskPolicyTest extends TestCase
 {
@@ -46,5 +47,19 @@ class TaskPolicyTest extends TestCase
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
+    }
+
+    public function testTaskPolicyLogicDirectly()
+    {
+        $policy = new TaskPolicy();
+        $user = User::factory()->create();
+        $owner = User::factory()->create();
+        $task = Task::factory()->create(['created_by_id' => $owner->id]);
+
+        $this->assertTrue($policy->update($owner, $task));
+        $this->assertFalse($policy->update($user, $task));
+        
+        $this->assertTrue($policy->delete($owner, $task));
+        $this->assertFalse($policy->delete($user, $task));
     }
 }
