@@ -14,7 +14,7 @@
                         ⚙️
                     </a>
                 @else
-                    <span class="text-4xl opacity-20" title="{{ __('Авторизуйтесь или зарегистрируйтесь, чтобы редактировать задачу') }}">⚙️</span>
+                    <span class="text-4xl opacity-20" title="{{ __('views.tasks.index.rightsVerification') }}">⚙️</span>
                 @endif
             </div>
 

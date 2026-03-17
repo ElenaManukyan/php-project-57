@@ -3,10 +3,10 @@
 return [
     'statuses' => [
         'index' => [
-            'create_button' => 'Create Status',
+            'create_button' => 'Create status',
             'id' => 'ID',
             'name' => 'Name',
-            'created_at' => 'Created At',
+            'created_at' => 'Created at',
             'actions' => 'Actions',
             'edit' => 'Edit',
             'delete' => 'Delete',
@@ -15,21 +15,24 @@ return [
             'submit' => 'Create',
         ],
         'edit' => [
-            'header' => 'Edit Status',
+            'header' => 'Edit status',
             'submit' => 'Update',
         ],
     ],
     'tasks' => [
         'index' => [
             'header' => 'Tasks',
-            'create_button' => 'Create Task',
+            'create_button' => 'Create task',
             'filter_status' => 'Status',
             'filter_author' => 'Author',
             'filter_executor' => 'Executor',
             'apply' => 'Apply',
+            'edit' => 'Edit task',
+            'show' => 'View task',
+            'rightsVerification' => 'Log in or register to edit the task',
         ],
         'create' => [
-            'header' => 'Create Task',
+            'header' => 'Create task',
             'description' => 'Description',
             'status' => 'Status',
             'executor' => 'Executor',
