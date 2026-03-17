@@ -53,4 +53,4 @@ jobs:
             -Dsonar.sources=app
             -Dsonar.tests=tests
             -Dsonar.test.inclusions=tests/**/*Test.php
-            -Dsonar.exclusions=app/Http/Controllers/Auth/**,app/Http/Requests/Auth/**,database/migrations/**,app/Providers/**,app/Http/Middleware/**
+            -Dsonar.exclusions=app/Http/Controllers/Auth/**,app/Http/Requests/Auth/**,app/Providers/**,database/migrations/**
