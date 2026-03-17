@@ -28,7 +28,6 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    // Тест: Создание задачи залогиненным пользователем
     public function testStore()
     {
         $data = [
@@ -67,5 +66,19 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(403);
         $this->assertDatabaseHas('tasks', ['id' => $task->id]);
+    }
+
+    public function testStoreValidationFails()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+                         ->post(route('tasks.store'), [
+                             'name' => '',
+                             'status_id' => '',
+                         ]);
+
+        $response->assertSessionHasErrors(['name', 'status_id']);
+        $this->assertDatabaseCount('tasks', 0);
     }
 }

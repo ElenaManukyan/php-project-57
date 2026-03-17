@@ -75,4 +75,15 @@ class TaskPolicyTest extends TestCase
         $this->assertTrue($policy->update($user, $task));
         $this->assertTrue($policy->delete($user, $task));
     }
+
+    public function testPolicyAllowsAccess()
+    {
+        $policy = new \App\Policies\TaskPolicy();
+        $user = User::factory()->create();
+        $task = Task::factory()->create(['created_by_id' => $user->id]);
+
+        $this->assertTrue($policy->viewAny($user));
+        $this->assertTrue($policy->view($user, $task));
+        $this->assertTrue($policy->create($user));
+    }
 }
