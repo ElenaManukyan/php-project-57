@@ -30,6 +30,16 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install NPM dependencies & Compile Assets
+        run: |
+          npm install
+          npm run build
+
       - name: Run Tests with Coverage
         run: php artisan test --coverage-clover=clover.xml
 
