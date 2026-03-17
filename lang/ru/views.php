@@ -39,4 +39,24 @@ return [
             'labels' => 'Метки',
         ]
     ],
+    'labels' => [
+        'index' => [
+            'header' => 'Метки',
+            'create_button' => 'Создать метку',
+            'id' => 'ID',
+            'name' => 'Имя',
+            'description' => 'Описание',
+            'created_at' => 'Дата создания',
+            'actions' => 'Действия',
+            'edit' => 'Изменить',
+            'delete' => 'Удалить',
+        ],
+        'create' => [
+            'submit' => 'Создать',
+        ],
+        'edit' => [
+            'header' => 'Изменение метки',
+            'submit' => 'Обновить',
+        ],
+    ],
 ];

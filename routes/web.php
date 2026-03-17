@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskStatusController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\LabelController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,13 +27,16 @@ Route::resource('task_statuses', TaskStatusController::class)
 Route::get('task_statuses', [TaskStatusController::class, 'index'])
     ->name('task_statuses.index');
 
-Route::resource('tasks', TaskController::class)->only(['index', 'show']);
-
 Route::middleware('auth')->group(function () {
     Route::resource('tasks', TaskController::class)->except(['index', 'show']);
 });
 
-Route::get('tasks', [TaskController::class, 'index'])
-    ->name('tasks.index');
+Route::resource('tasks', TaskController::class)->only(['index', 'show']);
+
+Route::get('/labels', [LabelController::class, 'index'])->name('labels.index');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('labels', LabelController::class)->except(['index']);
+});
 
 require __DIR__ . '/auth.php';
