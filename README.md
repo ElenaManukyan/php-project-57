@@ -1,6 +1,9 @@
 # 📋 Task Manager
 [![Actions Status](https://github.com/ElenaManukyan/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions)
 [![PHP Tests and Linter](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ElenaManukyan_php-project-57&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ElenaManukyan_php-project-57)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ElenaManukyan_php-project-57&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ElenaManukyan_php-project-57)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ElenaManukyan_php-project-57&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ElenaManukyan_php-project-57)
 ## 📖 Description
 **Task Manager** is a modern web application designed for team collaboration and task management. It allows users to create tasks, assign statuses, set executors, and categorize work using a flexible labeling system. 
 The project was built as a graduation project, demonstrating proficiency in the Laravel framework, database architecture, and professional development workflows (CI/CD, automated testing, and error tracking).
@@ -20,13 +23,6 @@ The project was built as a graduation project, demonstrating proficiency in the 
 * **Access Control:** Integrated authorization logic (Policies/Gates) ensuring users can only modify their own content.
 * **Production Monitoring:** Real-time error tracking and reporting via **Rollbar**.
 * **Localization:** Fully translatable interface (English and Russian supported).
-
-## Tech Stack
-* **Framework:** Laravel 12
-* **Language:** PHP 8.4
-* **Database:** PostgreSQL (Production), SQLite (Testing/Local)
-* **Frontend:** Tailwind CSS & Blade Templates
-* **DevOps:** Docker, GitHub Actions (CI), Rollbar
 
 ## Installation
 
