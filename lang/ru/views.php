@@ -37,7 +37,13 @@ return [
             'status' => 'Статус',
             'executor' => 'Исполнитель',
             'labels' => 'Метки',
-        ]
+        ],
+        'filter' => [
+            'status' => 'Статус',
+            'author' => 'Автор',
+            'executor' => 'Исполнитель',
+            'apply' => 'Применить',
+        ],
     ],
     'labels' => [
         'index' => [

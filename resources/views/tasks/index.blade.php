@@ -2,17 +2,55 @@
     <section class="bg-white dark:bg-gray-900">
         <div class="grid max-w-screen-xl px-4 pt-2 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-8 lg:grid-cols-12">
             <div class="grid col-span-full">
+
                 <h1 class="mb-8 text-5xl line-height-1 shadow-sm text-gray-300">{{ __('views.tasks.index.header') }}</h1>
 
-                @auth
-                <div class="mb-4">
-                    <a href="{{ route('tasks.create') }}" 
-                       class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded">
-                        {{ __('views.tasks.index.create_button') }}
-                    </a>
-                </div>
-                @endauth
+                <div class="flex flex-row gap-4 mb-2">
+                    <div class="w-full">
+                        <form method="GET" action="{{ route('tasks.index') }}" class="flex flex-wrap items-center">
+                            <select class="rounded border-gray-300 text-gray-700" name="filter[status_id]">
+                                <option value="">{{ __('views.tasks.filter.status') }}</option>
+                                @foreach($statuses as $status)
+                                    <option value="{{ $status->id }}" {{ request()->input('filter.status_id') == $status->id ? 'selected' : '' }}>
+                                        {{ $status->name }}
+                                    </option>
+                                @endforeach
+                            </select>
 
+                            <select class="rounded border-gray-300 text-gray-700 w-80" name="filter[created_by_id]">
+                                <option value="">{{ __('views.tasks.filter.author') }}</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}" {{ request()->input('filter.created_by_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <select class="rounded border-gray-300 text-gray-700 w-80" name="filter[assigned_to_id]">
+                                <option value="">{{ __('views.tasks.filter.executor') }}</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}" {{ request()->input('filter.assigned_to_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded ml-2" type="submit">
+                                {{ __('views.tasks.filter.apply') }}
+                            </button>
+
+                            <!-- Кнопка создания  -->
+                            @auth
+                            <div class="ml-auto">
+                                <a href="{{ route('tasks.create') }}" 
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded ml-2 whitespace-nowrap">
+                                    {{ __('views.tasks.index.create_button') }}
+                                </a>
+                            </div>
+                        @endauth
+                        </form>
+                    </div>
+                </div>
                 <table class="mt-4 w-full text-left border-collapse text-gray-300">
                     <thead class="border-b-2 border-solid border-gray-300">
                         <tr>

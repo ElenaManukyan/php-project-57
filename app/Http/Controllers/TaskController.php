@@ -6,6 +6,8 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use App\Models\User;
 use App\Models\Label;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Http\Request;
 
 // use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -15,9 +17,22 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('tasks.index', ['tasks' => Task::with(['status', 'author', 'assignee'])->get()]);
+        $tasks = QueryBuilder::for(Task::class)
+            ->with(['status', 'author', 'assignee'])
+            ->allowedFilters(
+                AllowedFilter::exact('status_id'),
+                AllowedFilter::exact('created_by_id'),
+                AllowedFilter::exact('assigned_to_id')
+            )
+            ->orderBy('id', 'desc')
+            ->paginate(15);
+
+        $statuses = TaskStatus::all();
+        $users = User::all();
+
+        return view('tasks.index', compact('tasks', 'statuses', 'users'));
     }
 
     /**

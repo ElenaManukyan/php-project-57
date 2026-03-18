@@ -37,6 +37,32 @@ return [
             'status' => 'Status',
             'executor' => 'Executor',
             'labels' => 'Labels',
-        ]
+        ],
+        'filter' => [
+            'status' => 'Status',
+            'author' => 'Author',
+            'executor' => 'Executor',
+            'apply' => 'Apply',
+        ],
+    ],
+    'labels' => [
+        'index' => [
+            'header' => 'Labels',
+            'create_button' => 'Create label',
+            'id' => 'ID',
+            'name' => 'Name',
+            'description' => 'Description',
+            'created_at' => 'Created at',
+            'actions' => 'Actions',
+            'edit' => 'Edit',
+            'delete' => 'Delete',
+        ],
+        'create' => [
+            'submit' => 'Create',
+        ],
+        'edit' => [
+            'header' => 'Edit label',
+            'submit' => 'Update',
+        ],
     ],
 ];
