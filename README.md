@@ -1,5 +1,4 @@
 # 📋 Task Manager
-### Tests and linter statuses:
 [![Actions Status](https://github.com/ElenaManukyan/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions)
 [![PHP Tests and Linter](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml)
 
