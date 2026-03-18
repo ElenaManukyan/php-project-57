@@ -1,10 +1,8 @@
 # 📋 Task Manager
 [![Actions Status](https://github.com/ElenaManukyan/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions)
-[![PHP Tests and Linter](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml)
-
+[![PHP Tests and Linter](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml)  
 ## 🌐 Demo:
-[Demo](https://php-project-57-cahu.onrender.com)
-
+[Demo](https://php-project-57-cahu.onrender.com)  
 ### 💻 Stack:
 ![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=flat&logo=php&logoColor=white)
