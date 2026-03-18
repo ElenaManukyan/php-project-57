@@ -1,3 +1,4 @@
+# 📋 Task Manager
 ### Tests and linter statuses:
 [![Actions Status](https://github.com/ElenaManukyan/php-project-57/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions)
 [![PHP Tests and Linter](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml/badge.svg)](https://github.com/ElenaManukyan/php-project-57/actions/workflows/php-tests.yml)
@@ -10,8 +11,6 @@
 ![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=flat&logo=php&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
-
-# 📋 Task Manager
 
 ## 📖 Description
 **Task Manager** is a modern web application designed for team collaboration and task management. It allows users to create tasks, assign statuses, set executors, and categorize work using a flexible labeling system. 
