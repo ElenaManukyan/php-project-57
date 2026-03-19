@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <h2 class="text-center text-3xl font-bold">
+    <h2 class="text-center text-2xl sm:text-3xl font-bold">
         <a
             href="{{ route('home') }}"
             class="
@@ -7,15 +7,16 @@
                 transition-colors
                 no-underline
                 text-inherit
-            ">
+            "
+        >
             {{ __('layouts.app.name') }}
         </a>
     </h2>
 
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="px-4 sm:px-0">
         @csrf
 
-        <div>
+        <div class="mt-6">
             <x-input-label
                 for="name"
                 value="{{ __('views.statuses.index.name') }}"
@@ -33,7 +34,7 @@
                     rounded-md
                     border border-gray-300
                     shadow-sm
-                    
+                    py-3 px-4
                     focus:!outline-none
                     focus:!ring
                     focus:!ring-blue-500
@@ -68,15 +69,15 @@
                     rounded-md
                     border border-gray-300
                     shadow-sm
-                    
+                    py-3 px-4
                     focus:!outline-none
                     focus:!ring
                     focus:!ring-blue-500
                     focus:!ring-opacity-25
                     focus:!border-blue-300
-                    
                 "
-                type="email" name="email"
+                type="email" 
+                name="email"
                 :value="old('email')"
                 required
                 autocomplete="username"
@@ -102,7 +103,7 @@
                     rounded-md
                     border border-gray-300
                     shadow-sm
-                    
+                    py-3 px-4
                     focus:!outline-none
                     focus:!ring-blue-500
                     focus:!ring-opacity-25
@@ -138,7 +139,7 @@
                     rounded-md
                     border border-gray-300
                     shadow-sm
-                    
+                    py-3 px-4
                     focus:!outline-none
                     focus:!ring-blue-500
                     focus:!ring-opacity-25
@@ -149,7 +150,7 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center !justify-end mt-4">
+        <div class="flex flex-col-reverse sm:flex-row items-center justify-center sm:justify-end mt-8 gap-4">
             <a
                 class="
                     underline
@@ -157,11 +158,10 @@
                     text-gray-600
                     hover:text-gray-900
                     rounded-md
-                    focus:!outline-none
-                    focus:!ring-2
-                    focus:!ring-offset-2
-                    focus:!ring-indigo-500
-                    mr-2
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-blue-500
                 "
                 href="{{ route('login') }}"
             >
@@ -170,15 +170,14 @@
 
             <x-primary-button
                 class="
-                    inline-flex items-center
+                    w-full sm:w-auto
+                    inline-flex items-center justify-center
                     bg-blue-500 hover:bg-blue-700
                     text-white font-medium
-                    rounded
-                    box-content
-                    !w-[144px]
-                    !h-[24px]
-                    !py-2 !px-4
-                    !ml-4
+                    rounded-lg
+                    py-3 px-6
+                    transition-all
+                    active:scale-95
                 "
             >
                 Зарегистрировать
