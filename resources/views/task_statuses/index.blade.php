@@ -42,11 +42,11 @@
                                         <form action="{{ route('task_statuses.destroy', $status) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" 
-                                                    class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-medium" 
-                                                    onclick="return confirm('{{ __('Вы уверены?') }}')">
+                                            <a href="{{ route('task_statuses.destroy', $status) }}" 
+                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-medium cursor-pointer"
+                                            onclick="event.preventDefault(); if(confirm('{{ __('Вы уверены?') }}')) { this.closest('form').submit(); }">
                                                 {{ __('views.statuses.index.delete') }}
-                                            </button>
+                                            </a>
                                         </form>
                                     </div>
                                 </td>
