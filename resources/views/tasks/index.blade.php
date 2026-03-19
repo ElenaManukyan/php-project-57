@@ -97,13 +97,14 @@
                                             <a class="text-blue-600 hover:text-blue-900" href="{{ route('tasks.edit', $task) }}">
                                                 {{ __('views.statuses.index.edit') }}
                                             </a>
-                                            <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline">
+                                            <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline" id="delete-task-{{ $task->id }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:text-red-900" 
-                                                        onclick="return confirm('{{ __('views.tasks.index.confirm_delete') }}')">
+                                                <a href="{{ route('tasks.destroy', $task) }}" 
+                                                class="text-red-600 hover:text-red-900 cursor-pointer"
+                                                onclick="event.preventDefault(); if(confirm('{{ __('views.tasks.index.confirm_delete') }}')) { this.closest('form').submit(); }">
                                                     {{ __('views.statuses.index.delete') }}
-                                                </button>
+                                                </a>
                                             </form>
                                         @endif
                                     </div>
