@@ -26,7 +26,7 @@ class TaskController extends Controller
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id')
             )
-            ->orderBy('id', 'desc')
+            ->orderBy('id', 'asc')
             ->paginate(15);
 
         $statuses = TaskStatus::all();
