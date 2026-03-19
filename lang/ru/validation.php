@@ -32,7 +32,7 @@ return [
         'array'   => 'Количество элементов в поле :attribute должно быть от :min до :max.',
     ],
     'boolean'              => 'Поле :attribute должно быть true или false.',
-    'confirmed'            => 'Поле :attribute не совпадает с подтверждением.',
+    'confirmed'            => 'Пароль и подтверждение не совпадают.',
     'current_password'     => 'Неверный пароль.',
     'date'                 => 'Поле :attribute не является корректной датой.',
     'date_equals'          => 'Поле :attribute должно быть датой равной :date.',
