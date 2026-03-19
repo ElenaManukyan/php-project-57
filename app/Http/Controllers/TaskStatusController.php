@@ -31,11 +31,14 @@ class TaskStatusController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|unique:task_statuses',
+        ], [
+            // 'name.required' => __('Поле имя обязательно для заполнения'),
+            'name.unique' => __('Статус с таким именем уже существует.'),
         ]);
 
         TaskStatus::create($data);
 
-        flash('Статус успешно создан')->success();
+        flash(__('Статус успешно создан'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -63,11 +66,14 @@ class TaskStatusController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
+        ], [
+            // 'name.required' => __('Поле имя обязательно для заполнения'),
+            'name.unique' => __('Статус с таким именем уже существует.'),
         ]);
 
         $taskStatus->update($data);
 
-        flash('Статус успешно изменён')->success();
+        flash(__('Статус успешно изменён'))->success();
 
         return redirect()->route('task_statuses.index');
     }

@@ -53,21 +53,25 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:tasks'],
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
             'assigned_to_id' => ['nullable', 'exists:users,id'],
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
+        ], [
+            // 'name.required' => __('views.tasks.validate.name_required'),
+            'name.unique' => __('Задача с таким именем уже существует.'),
+            // 'status_id.required' => __('Пожалуйста, выберите статус задачи.'),
         ]);
 
         $data['created_by_id'] = auth()->id();
 
         $task = Task::create($data);
 
-        $task->labels()->sync($data['labels']);
+        $task->labels()->sync($request->input('labels', []));
 
-        flash('Задача успешно создана')->success();
+        flash(__('Задача успешно создана'))->success();
 
         return redirect()->route('tasks.index');
     }
@@ -108,12 +112,15 @@ class TaskController extends Controller
         }
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'unique:tasks,name,' . $task->id],
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
             'assigned_to_id' => ['nullable', 'exists:users,id'],
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
+        ], [
+            'name.unique' => __('Задача с таким именем уже существует.'),
+            // 'status_id.required' => __('Пожалуйста, выберите статус задачи.'),
         ]);
 
         $task->update($data);
@@ -121,7 +128,7 @@ class TaskController extends Controller
         $labels = $request->input('labels', []);
         $task->labels()->sync($labels);
 
-        flash('Задача успешно обновлена')->success();
+        flash(__('Задача успешно обновлена'))->success();
 
         return redirect()->route('tasks.index');
     }

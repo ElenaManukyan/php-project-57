@@ -22,10 +22,15 @@ class LabelController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:labels',
             'description' => 'nullable|string',
+        ], [
+            // 'name.required' => __('Поле имя обязательно для заполнения'),
+            'name.unique' => __('Метка с таким именем уже существует.'),
         ]);
 
         Label::create($data);
+
         flash(__('Метка успешно создана'))->success();
+
         return redirect()->route('labels.index');
     }
 
@@ -39,10 +44,15 @@ class LabelController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:labels,name,' . $label->id,
             'description' => 'nullable|string',
+        ], [
+            // 'name.required' => __('Поле имя обязательно для заполнения'),
+            'name.unique' => __('Метка с таким именем уже существует.'),
         ]);
 
         $label->update($data);
+
         flash(__('Метка успешно обновлена'))->success();
+
         return redirect()->route('labels.index');
     }
 
