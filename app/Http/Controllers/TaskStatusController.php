@@ -67,7 +67,7 @@ class TaskStatusController extends Controller
 
         $taskStatus->update($data);
 
-        flash('Статус успешно изменен')->success();
+        flash('Статус успешно изменён')->success();
 
         return redirect()->route('task_statuses.index');
     }
