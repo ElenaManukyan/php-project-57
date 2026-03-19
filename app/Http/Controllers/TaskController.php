@@ -19,16 +19,17 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        /** @var QueryBuilder $tasks */
-        $tasks = QueryBuilder::for(Task::class)
+        /** @var mixed $query */
+        $query = QueryBuilder::for(Task::class)
             ->with(['status', 'author', 'assignee'])
             ->allowedFilters(
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id')
             )
-            ->orderBy('id', 'asc')
-            ->paginate(15);
+            ->orderBy('id', 'asc');
+
+        $tasks = $query->paginate(15);
 
         $statuses = TaskStatus::all();
         $users = User::all();
