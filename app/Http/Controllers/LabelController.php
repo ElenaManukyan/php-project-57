@@ -51,7 +51,7 @@ class LabelController extends Controller
 
         $label->update($data);
 
-        flash(__('Метка успешно обновлена'))->success();
+        flash(__('Метка успешно изменена'))->success();
 
         return redirect()->route('labels.index');
     }
