@@ -16,11 +16,8 @@ class TaskTest extends TestCase
     {
         $task = Task::factory()->create();
 
-        // $this->assertInstanceOf(User::class, $task->author);
-        // $this->assertInstanceOf(TaskStatus::class, $task->status);
-
         if (isset($task->assigned_to_id)) {
-            $this->assertInstanceOf(User::class, $task->assignee);
+            $this->assertInstanceOf(User::class, $task->assignedTo);
         }
     }
 }

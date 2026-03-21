@@ -81,10 +81,9 @@ class TaskController extends Controller implements HasMiddleware
     public function show(Task $task)
     {
         return view('tasks.show', [
-            'task' => $task->load(['status', 'author', 'assignee', 'labels'])
+            'task' => $task->load(['status', 'author', 'assignedTo', 'labels']) 
         ]);
     }
-
     public function edit(Task $task)
     {
         $statuses = TaskStatus::all();
