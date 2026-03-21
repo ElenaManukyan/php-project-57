@@ -28,10 +28,6 @@ class TaskController extends Controller implements HasMiddleware
         ];
     }
 
-    public function __construct()
-    {
-    }
-
     public function index(Request $request)
     {
         $tasks = QueryBuilder::for(Task::class)
@@ -41,27 +37,27 @@ class TaskController extends Controller implements HasMiddleware
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id')
             )
-            ->orderBy('id', 'asc')
+            ->orderBy('id')
             ->paginate(15);
 
-        $statuses = TaskStatus::all();
-        $users = User::all();
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
 
         return view('tasks.index', compact('tasks', 'statuses', 'users'));
     }
 
     public function create()
     {
-        $statuses = TaskStatus::all();
-        $users = User::all();
-        $labels = Label::all();
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
 
         return view('tasks.create', compact('statuses', 'users', 'labels'));
     }
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:tasks'],
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
@@ -72,8 +68,8 @@ class TaskController extends Controller implements HasMiddleware
             'name.unique' => __('Задача с таким именем уже существует.'),
         ]);
 
-        $data['created_by_id'] = auth()->id();
-        $task = Task::create($data);
+        $task = $request->user()->createdTasks()->create($validated);
+        
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('Задача успешно создана'))->success();
@@ -87,18 +83,19 @@ class TaskController extends Controller implements HasMiddleware
             'task' => $task->load(['status', 'author', 'assignedTo', 'labels'])
         ]);
     }
+
     public function edit(Task $task)
     {
-        $statuses = TaskStatus::all();
-        $users = User::all();
-        $labels = Label::all();
+        $statuses = TaskStatus::pluck('name', 'id');
+        $users = User::pluck('name', 'id');
+        $labels = Label::pluck('name', 'id');
 
         return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
 
     public function update(Request $request, Task $task)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:tasks,name,' . $task->id],
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
@@ -109,7 +106,7 @@ class TaskController extends Controller implements HasMiddleware
             'name.unique' => __('Задача с таким именем уже существует.'),
         ]);
 
-        $task->update($data);
+        $task->update($validated);
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('Задача успешно изменена'))->success();

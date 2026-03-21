@@ -16,21 +16,16 @@ class TaskStatusController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth', except: ['index']),
-
-            new Middleware('can:viewAny,App\Models\TaskStatus', only: ['index']),
+            
             new Middleware('can:create,App\Models\TaskStatus', only: ['create', 'store']),
             new Middleware('can:update,task_status', only: ['edit', 'update']),
             new Middleware('can:delete,task_status', only: ['destroy']),
         ];
     }
 
-    public function __construct()
-    {
-    }
-
     public function index()
     {
-        $taskStatuses = TaskStatus::all();
+        $taskStatuses = TaskStatus::orderBy('id')->get();
         return view('task_statuses.index', compact('taskStatuses'));
     }
 
@@ -41,13 +36,13 @@ class TaskStatusController extends Controller implements HasMiddleware
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required|unique:task_statuses',
+        $validated = $request->validate([
+            'name' => 'required|unique:task_statuses|max:255',
         ], [
             'name.unique' => __('Статус с таким именем уже существует.'),
         ]);
 
-        TaskStatus::create($data);
+        TaskStatus::create($validated);
 
         flash(__('Статус успешно создан'))->success();
 
@@ -61,13 +56,13 @@ class TaskStatusController extends Controller implements HasMiddleware
 
     public function update(Request $request, TaskStatus $taskStatus)
     {
-        $data = $request->validate([
-            'name' => 'required|unique:task_statuses,name,' . $taskStatus->id,
+        $validated = $request->validate([
+            'name' => 'required|max:255|unique:task_statuses,name,' . $taskStatus->id,
         ], [
             'name.unique' => __('Статус с таким именем уже существует.'),
         ]);
 
-        $taskStatus->update($data);
+        $taskStatus->update($validated);
 
         flash(__('Статус успешно изменён'))->success();
 

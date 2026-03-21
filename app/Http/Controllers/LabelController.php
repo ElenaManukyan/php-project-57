@@ -24,13 +24,11 @@ class LabelController extends Controller implements HasMiddleware
         ];
     }
 
-    public function __construct()
-    {
-    }
-
     public function index()
     {
-        return view('labels.index', ['labels' => Label::all()]);
+        return view('labels.index', [
+            'labels' => Label::orderBy('id')->get()
+        ]);
     }
 
     public function create()
@@ -40,14 +38,14 @@ class LabelController extends Controller implements HasMiddleware
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255|unique:labels',
             'description' => 'nullable|string',
         ], [
             'name.unique' => __('Метка с таким именем уже существует.'),
         ]);
 
-        Label::create($data);
+        Label::create($validated);
 
         flash(__('Метка успешно создана'))->success();
 
@@ -61,14 +59,14 @@ class LabelController extends Controller implements HasMiddleware
 
     public function update(Request $request, Label $label)
     {
-        $data = $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255|unique:labels,name,' . $label->id,
             'description' => 'nullable|string',
         ], [
             'name.unique' => __('Метка с таким именем уже существует.'),
         ]);
 
-        $label->update($data);
+        $label->update($validated);
 
         flash(__('Метка успешно изменена'))->success();
 

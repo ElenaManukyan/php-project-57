@@ -12,27 +12,27 @@
                         <div class="flex flex-col gap-3 sm:flex-row w-full lg:w-auto">
                             <select class="rounded border-gray-300 text-gray-700 w-full lg:w-48" name="filter[status_id]">
                                 <option value="">{{ __('views.tasks.filter.status') }}</option>
-                                @foreach($statuses as $status)
-                                    <option value="{{ $status->id }}" {{ request()->input('filter.status_id') == $status->id ? 'selected' : '' }}>
-                                        {{ $status->name }}
+                                @foreach($statuses as $id => $name)
+                                    <option value="{{ $id }}" @selected(request()->input('filter.status_id') == $id)>
+                                        {{ $name }}
                                     </option>
                                 @endforeach
                             </select>
 
                             <select class="rounded border-gray-300 text-gray-700 w-full lg:w-64" name="filter[created_by_id]">
                                 <option value="">{{ __('views.tasks.filter.author') }}</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ request()->input('filter.created_by_id') == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }}
+                                @foreach($users as $id => $name)
+                                    <option value="{{ $id }}" @selected(request()->input('filter.created_by_id') == $id)>
+                                        {{ $name }}
                                     </option>
                                 @endforeach
                             </select>
 
                             <select class="rounded border-gray-300 text-gray-700 w-full lg:w-64" name="filter[assigned_to_id]">
                                 <option value="">{{ __('views.tasks.filter.executor') }}</option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ request()->input('filter.assigned_to_id') == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }}
+                                @foreach($users as $id => $name)
+                                    <option value="{{ $id }}" @selected(request()->input('filter.assigned_to_id') == $id)>
+                                        {{ $name }}
                                     </option>
                                 @endforeach
                             </select>

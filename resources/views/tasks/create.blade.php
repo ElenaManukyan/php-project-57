@@ -26,37 +26,37 @@
                         <div class="flex flex-col gap-2">
                             <label for="status_id" class="font-medium">{{ __('views.tasks.create.status') }}</label>
                             <select name="status_id" id="status_id" 
-                                    class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-                                <option value=""></option>
-                                @foreach($statuses as $status)
-                                    <option value="{{ $status->id }}" @selected(old('status_id') == $status->id)>
-                                        {{ $status->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                            <option value=""></option>
+                            @foreach($statuses as $id => $name)
+                                <option value="{{ $id }}" @selected(old('status_id') == $id)>
+                                    {{ $name }}
+                                </option>
+                            @endforeach
+                        </select>
                             @error('status_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="flex flex-col gap-2">
                             <label for="assigned_to_id" class="font-medium">{{ __('views.tasks.index.filter_executor') }}</label>
                             <select name="assigned_to_id" id="assigned_to_id" 
-                                    class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
-                                <option value=""></option>
-                                @foreach($users as $user)
-                                    <option value="{{ $user->id }}" @selected(old('assigned_to_id') == $user->id)>
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                            <option value=""></option>
+                            @foreach($users as $id => $name)
+                                <option value="{{ $id }}" @selected(old('assigned_to_id') == $id)>
+                                    {{ $name }}
+                                </option>
+                            @endforeach
+                        </select>
                         </div>
 
                         <div class="flex flex-col gap-2">
                             <label for="marks" class="font-medium">{{ __('views.tasks.create.labels') }}</label>
                             <select name="labels[]" id="marks" class="rounded-md border-gray-300 w-full h-48 text-black p-2" multiple>
-                                @foreach($labels as $label)
-                                    <option value="{{ $label->id }}"
-                                        @selected(is_array(old('labels')) && in_array($label->id, old('labels')))>
-                                        {{ $label->name }}
+                                @foreach($labels as $id => $name)
+                                    <option value="{{ $id }}"
+                                        @selected(is_array(old('labels')) && in_array($id, old('labels')))>
+                                        {{ $name }}
                                     </option>
                                 @endforeach
                             </select>
