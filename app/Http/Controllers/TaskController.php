@@ -32,6 +32,7 @@ class TaskController extends Controller implements HasMiddleware
     {
         $tasks = QueryBuilder::for(Task::class)
             ->with(['status', 'author', 'assignedTo'])
+            /** @var mixed $tasks */
             ->allowedFilters(
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),

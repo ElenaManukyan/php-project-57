@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * @property int $id
  * @property string $name
- * @property-read \App\Models\User $author
- * @property-read \App\Models\TaskStatus $status
- * @property-read \App\Models\User|null $assignee
+ * @property-read \App\Models\User|null $assignedTo
  */
 
 class Task extends Model
