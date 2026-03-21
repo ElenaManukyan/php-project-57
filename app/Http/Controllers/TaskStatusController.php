@@ -39,7 +39,7 @@ class TaskStatusController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => 'required|unique:task_statuses|max:255',
         ], [
-            'name.unique' => __('validation.status.unique_error'),
+            'name.unique' => __('validation.status.unique'),
         ]);
 
         TaskStatus::create($validated);
@@ -59,7 +59,7 @@ class TaskStatusController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => 'required|max:255|unique:task_statuses,name,' . $taskStatus->id,
         ], [
-            'name.unique' => __('validation.status.unique_error'),
+            'name.unique' => __('validation.status.unique'),
         ]);
 
         $taskStatus->update($validated);
