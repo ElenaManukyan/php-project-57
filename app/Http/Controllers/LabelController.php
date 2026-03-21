@@ -68,7 +68,7 @@ class LabelController extends Controller implements HasMiddleware
 
         $label->update($validated);
 
-        flash(__('messages.label.updated'))->success();
+        flash(__('validation.label.updated'))->success();
 
         return redirect()->route('labels.index');
     }
