@@ -30,9 +30,11 @@ class TaskController extends Controller implements HasMiddleware
 
     public function index(Request $request)
     {
-        $tasks = QueryBuilder::for(Task::class)
+        /** @var \Spatie\QueryBuilder\QueryBuilder $query */
+        $query = QueryBuilder::for(Task::class);
+
+        $tasks = $query
             ->with(['status', 'author', 'assignedTo'])
-            /** @var mixed $tasks */
             ->allowedFilters(
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),

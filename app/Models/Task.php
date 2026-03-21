@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
- * @property int $id
- * @property string $name
+ * @property-read \App\Models\User $author
  * @property-read \App\Models\User|null $assignedTo
+ * @property-read \App\Models\TaskStatus $status
  */
 
 class Task extends Model
