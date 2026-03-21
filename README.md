@@ -11,7 +11,7 @@ The project was built as a graduation project, demonstrating proficiency in the 
 [Demo](https://php-project-57-cahu.onrender.com)  
 ### 💻 Stack:
 ![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?style=flat&logo=php&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
 ## ✨ Key Features
@@ -27,7 +27,7 @@ The project was built as a graduation project, demonstrating proficiency in the 
 ## Installation
 
 ### Prerequisites
-* PHP >= 8.4
+* PHP >= 8.2
 * Composer
 * Node.js & NPM
 
