@@ -29,7 +29,7 @@
                                     class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
                                 <option value=""></option>
                                 @foreach($statuses as $status)
-                                    <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                    <option value="{{ $status->id }}" @selected(old('status_id') == $status->id)>
                                         {{ $status->name }}
                                     </option>
                                 @endforeach
@@ -43,7 +43,7 @@
                                     class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
                                 <option value=""></option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('assigned_to_id') == $user->id ? 'selected' : '' }}>
+                                    <option value="{{ $user->id }}" @selected(old('assigned_to_id') == $user->id)>
                                         {{ $user->name }}
                                     </option>
                                 @endforeach
@@ -55,8 +55,7 @@
                             <select name="labels[]" id="marks" class="rounded-md border-gray-300 w-full h-48 text-black p-2" multiple>
                                 @foreach($labels as $label)
                                     <option value="{{ $label->id }}"
-                                        @if(isset($task) && $task->labels->contains($label->id)) selected @endif
-                                    >
+                                        @selected(is_array(old('labels')) && in_array($label->id, old('labels')))>
                                         {{ $label->name }}
                                     </option>
                                 @endforeach

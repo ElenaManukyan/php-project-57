@@ -30,12 +30,12 @@
                             <select name="status_id" id="status_id" 
                                     class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm">
                                 @foreach($statuses as $status)
-                                    <option value="{{ $status->id }}" 
-                                        {{ old('status_id', $task->status_id) == $status->id ? 'selected' : '' }}>
+                                    <option value="{{ $status->id }}" @selected(old('status_id', $task->status_id) == $status->id)>
                                         {{ $status->name }}
                                     </option>
                                 @endforeach
                             </select>
+                            @error('status_id') <div class="text-red-500 text-sm mt-1">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="flex flex-col gap-2">
@@ -44,8 +44,7 @@
                                     class="rounded-md border border-gray-300 w-full p-3 text-black focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition shadow-sm">
                                 <option value="">{{ __('views.tasks.create.choose_assignee') }}</option>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}" 
-                                        {{ old('assigned_to_id', $task->assigned_to_id) == $user->id ? 'selected' : '' }}>
+                                    <option value="{{ $user->id }}" @selected(old('assigned_to_id', $task->assigned_to_id) == $user->id)>
                                         {{ $user->name }}
                                     </option>
                                 @endforeach
@@ -57,8 +56,11 @@
                             <select name="labels[]" id="marks" class="rounded-md border-gray-300 w-full h-48 text-black p-2 focus:ring-2 focus:ring-blue-500 outline-none" multiple>
                                 @foreach($labels as $label)
                                     <option value="{{ $label->id }}"
-                                        @if(isset($task) && $task->labels->contains($label->id)) selected @endif
-                                    >
+                                        @selected(
+                                            is_array(old('labels')) 
+                                            ? in_array($label->id, old('labels')) 
+                                            : $task->labels->contains($label->id)
+                                        )>
                                         {{ $label->name }}
                                     </option>
                                 @endforeach
