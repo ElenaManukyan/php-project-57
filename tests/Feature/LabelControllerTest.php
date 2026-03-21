@@ -28,9 +28,9 @@ class LabelControllerTest extends TestCase
 
     public function testStore()
     {
-        $data = ['name' => 'Feature', 'description' => 'New functionality'];
-        $response = $this->actingAs($this->user)->post(route('labels.store'), $data);
+        $data = Label::factory()->make()->only(['name', 'description']);
 
+        $response = $this->actingAs($this->user)->post(route('labels.store'), $data);
         $response->assertRedirect(route('labels.index'));
         $this->assertDatabaseHas('labels', $data);
     }
@@ -72,7 +72,7 @@ class LabelControllerTest extends TestCase
     public function testUpdate()
     {
         $label = Label::factory()->create();
-        $data = ['name' => 'Updated Label'];
+        $data = Label::factory()->make()->only(['name']);
 
         $response = $this->actingAs($this->user)
             ->patch(route('labels.update', $label), $data);

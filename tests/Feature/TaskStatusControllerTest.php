@@ -27,7 +27,7 @@ class TaskStatusControllerTest extends TestCase
 
     public function testStore()
     {
-        $data = ['name' => 'В работе'];
+        $data = TaskStatus::factory()->make()->only(['name']);
 
         $response = $this->actingAs($this->user)
             ->post(route('task_statuses.store'), $data);
@@ -39,7 +39,7 @@ class TaskStatusControllerTest extends TestCase
     public function testUpdate()
     {
         $status = TaskStatus::factory()->create();
-        $newData = ['name' => 'Завершен'];
+        $newData = TaskStatus::factory()->make()->only(['name']);
 
         $response = $this->actingAs($this->user)
             ->patch(route('task_statuses.update', $status), $newData);

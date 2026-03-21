@@ -30,19 +30,16 @@ class TaskControllerTest extends TestCase
 
     public function testStore()
     {
-        $data = [
-            'name' => 'Test Task',
+        $data = Task::factory()->make([
             'status_id' => $this->status->id,
-            'description' => 'Fine description',
             'assigned_to_id' => $this->user->id,
-            'labels' => [],
-        ];
+        ])->only(['name', 'status_id', 'description', 'assigned_to_id']);
 
         $response = $this->actingAs($this->user)
             ->post(route('tasks.store'), $data);
 
         $response->assertRedirect(route('tasks.index'));
-        $this->assertDatabaseHas('tasks', ['name' => 'Test Task']);
+        $this->assertDatabaseHas('tasks', $data);
     }
 
     public function testDestroyByCreator()
@@ -105,15 +102,15 @@ class TaskControllerTest extends TestCase
     public function testUpdate()
     {
         $task = Task::factory()->create(['created_by_id' => $this->user->id]);
-        $data = [
-            'name' => 'Updated Task',
-            'status_id' => $this->status->id,
-        ];
+
+        $data = Task::factory()->make([
+            'status_id' => $this->status->id
+        ])->only(['name', 'status_id']);
 
         $response = $this->actingAs($this->user)
             ->patch(route('tasks.update', $task), $data);
 
         $response->assertRedirect(route('tasks.index'));
-        $this->assertDatabaseHas('tasks', ['name' => 'Updated Task']);
+        $this->assertDatabaseHas('tasks', $data);
     }
 }
