@@ -16,7 +16,7 @@ class TaskStatusController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth', except: ['index']),
-            
+
             new Middleware('can:create,App\Models\TaskStatus', only: ['create', 'store']),
             new Middleware('can:update,task_status', only: ['edit', 'update']),
             new Middleware('can:delete,task_status', only: ['destroy']),
@@ -39,12 +39,12 @@ class TaskStatusController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => 'required|unique:task_statuses|max:255',
         ], [
-            'name.unique' => __('Статус с таким именем уже существует.'),
+            'name.unique' => __('validation.status.unique_error'),
         ]);
 
         TaskStatus::create($validated);
 
-        flash(__('Статус успешно создан'))->success();
+        flash(__('validation.status.created'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -59,12 +59,12 @@ class TaskStatusController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => 'required|max:255|unique:task_statuses,name,' . $taskStatus->id,
         ], [
-            'name.unique' => __('Статус с таким именем уже существует.'),
+            'name.unique' => __('validation.status.unique_error'),
         ]);
 
         $taskStatus->update($validated);
 
-        flash(__('Статус успешно изменён'))->success();
+        flash(__('validation.status.updated'))->success();
 
         return redirect()->route('task_statuses.index');
     }
@@ -72,13 +72,13 @@ class TaskStatusController extends Controller implements HasMiddleware
     public function destroy(TaskStatus $taskStatus)
     {
         if ($taskStatus->tasks()->exists()) {
-            flash(__('Не удалось удалить статус'))->error();
+            flash(__('validation.status.error'))->error();
             return redirect()->route('task_statuses.index');
         }
 
         $taskStatus->delete();
 
-        flash(__('Статус успешно удалён'))->success();
+        flash(__('validation.status.deleted'))->success();
 
         return redirect()->route('task_statuses.index');
     }

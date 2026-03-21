@@ -65,14 +65,14 @@ class TaskController extends Controller implements HasMiddleware
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
         ], [
-            'name.unique' => __('Задача с таким именем уже существует.'),
+            'name.unique' => __('validation.task.unique_error'),
         ]);
 
         $task = $request->user()->createdTasks()->create($validated);
-        
+
         $task->labels()->sync($request->input('labels', []));
 
-        flash(__('Задача успешно создана'))->success();
+        flash(__('validation.task.created'))->success();
 
         return redirect()->route('tasks.index');
     }
@@ -103,13 +103,13 @@ class TaskController extends Controller implements HasMiddleware
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
         ], [
-            'name.unique' => __('Задача с таким именем уже существует.'),
+            'name.unique' => __('validation.task.unique_error'),
         ]);
 
         $task->update($validated);
         $task->labels()->sync($request->input('labels', []));
 
-        flash(__('Задача успешно изменена'))->success();
+        flash(__('validation.task.updated'))->success();
 
         return redirect()->route('tasks.index');
     }
@@ -119,7 +119,7 @@ class TaskController extends Controller implements HasMiddleware
         $task->labels()->detach();
         $task->delete();
 
-        flash(__('Задача успешно удалена'))->success();
+        flash(__('validation.task.deleted'))->success();
 
         return redirect()->route('tasks.index');
     }

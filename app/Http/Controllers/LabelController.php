@@ -42,7 +42,7 @@ class LabelController extends Controller implements HasMiddleware
             'name' => 'required|string|max:255|unique:labels',
             'description' => 'nullable|string',
         ], [
-            'name.unique' => __('Метка с таким именем уже существует.'),
+            'name.unique' => __('validation.label.unique'),
         ]);
 
         Label::create($validated);
@@ -63,12 +63,12 @@ class LabelController extends Controller implements HasMiddleware
             'name' => 'required|string|max:255|unique:labels,name,' . $label->id,
             'description' => 'nullable|string',
         ], [
-            'name.unique' => __('Метка с таким именем уже существует.'),
+            'name.unique' => __('validation.label.unique'),
         ]);
 
         $label->update($validated);
 
-        flash(__('Метка успешно изменена'))->success();
+        flash(__('messages.label.updated'))->success();
 
         return redirect()->route('labels.index');
     }
@@ -76,13 +76,13 @@ class LabelController extends Controller implements HasMiddleware
     public function destroy(Label $label)
     {
         if ($label->tasks()->exists()) {
-            flash(__('Не удалось удалить метку'))->error();
+            flash(__('messages.label.error'))->error();
             return redirect()->route('labels.index');
         }
 
         $label->delete();
 
-        flash(__('Метка успешно удалена'))->success();
+        flash(__('messages.label.deleted'))->success();
 
         return redirect()->route('labels.index');
     }
