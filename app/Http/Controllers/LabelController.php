@@ -16,7 +16,7 @@ class LabelController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth', except: ['index']),
-            
+
             new Middleware('can:viewAny,App\Models\Label', only: ['index']),
             new Middleware('can:create,App\Models\Label', only: ['create', 'store']),
             new Middleware('can:update,label', only: ['edit', 'update']),

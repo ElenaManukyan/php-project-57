@@ -11,9 +11,12 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class TaskController extends Controller implements HasMiddleware
 {
+    use AuthorizesRequests;
+
     public static function middleware(): array
     {
         return [
@@ -32,7 +35,7 @@ class TaskController extends Controller implements HasMiddleware
     public function index(Request $request)
     {
         $tasks = QueryBuilder::for(Task::class)
-            ->with(['status', 'author', 'assignedTo']) 
+            ->with(['status', 'author', 'assignedTo'])
             ->allowedFilters(
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),
@@ -81,7 +84,7 @@ class TaskController extends Controller implements HasMiddleware
     public function show(Task $task)
     {
         return view('tasks.show', [
-            'task' => $task->load(['status', 'author', 'assignedTo', 'labels']) 
+            'task' => $task->load(['status', 'author', 'assignedTo', 'labels'])
         ]);
     }
     public function edit(Task $task)

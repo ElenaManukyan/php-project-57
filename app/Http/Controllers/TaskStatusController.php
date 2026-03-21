@@ -16,7 +16,7 @@ class TaskStatusController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('auth', except: ['index']),
-            
+
             new Middleware('can:viewAny,App\Models\TaskStatus', only: ['index']),
             new Middleware('can:create,App\Models\TaskStatus', only: ['create', 'store']),
             new Middleware('can:update,task_status', only: ['edit', 'update']),
