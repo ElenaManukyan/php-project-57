@@ -88,7 +88,7 @@
                                     </a>
                                 </td>
                                 <td class="py-3 px-4">{{ $task->author->name }}</td>
-                                <td class="py-3 px-4">{{ $task->assignee?->name ?? '—' }}</td>
+                                <td class="py-3 px-4">{{ $task->assignedTo->name ?? '—' }}</td>
                                 <td class="py-3 px-4">{{ $task->created_at->format('d.m.Y') }}</td>
                                 @auth
                                 <td class="py-3 px-4">

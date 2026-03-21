@@ -4,9 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class LabelController extends Controller
+class LabelController extends Controller implements HasMiddleware
 {
+    use AuthorizesRequests;
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth', except: ['index']),
+            
+            new Middleware('can:viewAny,App\Models\Label', only: ['index']),
+            new Middleware('can:create,App\Models\Label', only: ['create', 'store']),
+            new Middleware('can:update,label', only: ['edit', 'update']),
+            new Middleware('can:delete,label', only: ['destroy']),
+        ];
+    }
+
+    public function __construct()
+    {
+    }
+
     public function index()
     {
         return view('labels.index', ['labels' => Label::all()]);
@@ -23,7 +44,6 @@ class LabelController extends Controller
             'name' => 'required|string|max:255|unique:labels',
             'description' => 'nullable|string',
         ], [
-            // 'name.required' => __('Поле имя обязательно для заполнения'),
             'name.unique' => __('Метка с таким именем уже существует.'),
         ]);
 
@@ -45,7 +65,6 @@ class LabelController extends Controller
             'name' => 'required|string|max:255|unique:labels,name,' . $label->id,
             'description' => 'nullable|string',
         ], [
-            // 'name.required' => __('Поле имя обязательно для заполнения'),
             'name.unique' => __('Метка с таким именем уже существует.'),
         ]);
 
@@ -58,14 +77,15 @@ class LabelController extends Controller
 
     public function destroy(Label $label)
     {
-        // Если метка связана с задачей, удалить её нельзя
         if ($label->tasks()->exists()) {
-            flash('Не удалось удалить метку')->error();
+            flash(__('Не удалось удалить метку'))->error();
             return redirect()->route('labels.index');
         }
 
         $label->delete();
-        flash('Метка успешно удалена')->success();
+
+        flash(__('Метка успешно удалена'))->success();
+
         return redirect()->route('labels.index');
     }
 }

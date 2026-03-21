@@ -15,39 +15,39 @@
                 </div>
                 @endauth
 
-                <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
-                    <table class="w-full text-left border-collapse text-gray-900 dark:text-gray-300">
-                        <thead class="bg-gray-50 dark:bg-gray-700/50 border-b-2 border-gray-200 dark:border-gray-600">
+                <div class="overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-left border-collapse text-gray-300 min-w-[800px]">
+                        <thead class="bg-gray-50 dark:bg-gray-800 border-b-2 border-gray-300">
                             <tr>
-                                <th class="py-4 px-4 font-semibold text-sm uppercase tracking-wider">ID</th>
-                                <th class="py-4 px-4 font-semibold text-sm uppercase tracking-wider">{{ __('views.labels.index.name') }}</th>
-                                <th class="py-4 px-4 font-semibold text-sm uppercase tracking-wider">{{ __('views.labels.index.description') }}</th>
-                                <th class="py-4 px-4 font-semibold text-sm uppercase tracking-wider whitespace-nowrap">{{ __('views.labels.index.created_at') }}</th>
+                                <th class="py-3 px-4 tracking-wider text-sm font-bold">ID</th>
+                                <th class="py-3 px-4 tracking-wider text-sm font-bold">{{ __('views.labels.index.name') }}</th>
+                                <th class="py-3 px-4 tracking-wider text-sm font-bold">{{ __('views.labels.index.description') }}</th>
+                                <th class="py-3 px-4 tracking-wider text-sm font-bold whitespace-nowrap">{{ __('views.labels.index.created_at') }}</th>
                                 @auth
-                                    <th class="py-4 px-4 font-semibold text-sm uppercase tracking-wider">{{ __('views.labels.index.actions') }}</th>
+                                    <th class="py-3 px-4 tracking-wider text-sm font-bold">{{ __('views.labels.index.actions') }}</th>
                                 @endauth
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody>
                             @foreach($labels as $label)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                                <td class="py-4 px-4">{{ $label->id }}</td>
-                                <td class="py-4 px-4 font-medium">{{ $label->name }}</td>
-                                <td class="py-4 px-4 min-w-[200px] max-w-xs truncate md:max-w-md md:whitespace-normal">
+                            <tr class="border-b border-dashed border-gray-700 hover:bg-gray-800 transition">
+                                <td class="py-3 px-4">{{ $label->id }}</td>
+                                <td class="py-3 px-4">{{ $label->name }}</td>
+                                <td class="py-3 px-4 max-w-xs truncate md:whitespace-normal">
                                     {{ $label->description }}
                                 </td>
-                                <td class="py-4 px-4 whitespace-nowrap text-sm">{{ $label->created_at->format('d.m.Y') }}</td>
+                                <td class="py-3 px-4 whitespace-nowrap">{{ $label->created_at->format('d.m.Y') }}</td>
                                 @auth
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center gap-4">
-                                        <a class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 font-medium" href="{{ route('labels.edit', $label) }}">
+                                <td class="py-3 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <a class="text-blue-600 hover:text-blue-900" href="{{ route('labels.edit', $label) }}">
                                             {{ __('views.labels.index.edit') }}
                                         </a>
                                         <form action="{{ route('labels.destroy', $label) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <a href="{{ route('labels.destroy', $label) }}" 
-                                            class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 font-medium cursor-pointer"
+                                            class="text-red-600 hover:text-red-900 cursor-pointer"
                                             onclick="event.preventDefault(); if(confirm('{{ __('Вы уверены?') }}')) { this.closest('form').submit(); }">
                                                 {{ __('views.labels.index.delete') }}
                                             </a>
@@ -60,6 +60,7 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </section>

@@ -29,9 +29,9 @@ class Task extends Model
         return $this->belongsTo(User::class, 'created_by_id');
     }
 
-    public function assignee()
+    public function assignedTo() 
     {
-        return $this->belongsTo(User::class, 'assigned_to_id');
+        return $this->belongsTo(User::class);
     }
 
     public function labels()

@@ -9,19 +9,31 @@ use App\Models\Label;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-// use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-
-class TaskController extends Controller
+class TaskController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('can:viewAny,App\Models\Task', only: ['index']),
+            new Middleware('can:view,task', only: ['show']),
+            new Middleware('can:create,App\Models\Task', only: ['create', 'store']),
+            new Middleware('can:update,task', only: ['edit', 'update']),
+            new Middleware('can:delete,task', only: ['destroy']),
+        ];
+    }
+
+    public function __construct()
+    {
+    }
+
     public function index(Request $request)
     {
         $tasks = QueryBuilder::for(Task::class)
-            ->with(['status', 'author', 'assignee'])
-            ->allowedFilters( // @phpstan-ignore-line
+            ->with(['status', 'author', 'assignedTo']) 
+            ->allowedFilters(
                 AllowedFilter::exact('status_id'),
                 AllowedFilter::exact('created_by_id'),
                 AllowedFilter::exact('assigned_to_id')
@@ -35,9 +47,6 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks', 'statuses', 'users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $statuses = TaskStatus::all();
@@ -47,9 +56,6 @@ class TaskController extends Controller
         return view('tasks.create', compact('statuses', 'users', 'labels'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -60,15 +66,11 @@ class TaskController extends Controller
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
         ], [
-            // 'name.required' => __('views.tasks.validate.name_required'),
             'name.unique' => __('Задача с таким именем уже существует.'),
-            // 'status_id.required' => __('Пожалуйста, выберите статус задачи.'),
         ]);
 
         $data['created_by_id'] = auth()->id();
-
         $task = Task::create($data);
-
         $task->labels()->sync($request->input('labels', []));
 
         flash(__('Задача успешно создана'))->success();
@@ -76,9 +78,6 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Task $task)
     {
         return view('tasks.show', [
@@ -86,15 +85,8 @@ class TaskController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Task $task)
     {
-        if (auth()->id() !== $task->created_by_id) {
-            abort(403);
-        }
-
         $statuses = TaskStatus::all();
         $users = User::all();
         $labels = Label::all();
@@ -102,15 +94,8 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task', 'statuses', 'users', 'labels'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Task $task)
     {
-        if (auth()->id() !== $task->created_by_id) {
-            abort(403);
-        }
-
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:tasks,name,' . $task->id],
             'description' => ['nullable', 'string'],
@@ -120,33 +105,22 @@ class TaskController extends Controller
             'labels.*' => ['exists:labels,id'],
         ], [
             'name.unique' => __('Задача с таким именем уже существует.'),
-            // 'status_id.required' => __('Пожалуйста, выберите статус задачи.'),
         ]);
 
         $task->update($data);
-
-        $labels = $request->input('labels', []);
-        $task->labels()->sync($labels);
+        $task->labels()->sync($request->input('labels', []));
 
         flash(__('Задача успешно изменена'))->success();
 
         return redirect()->route('tasks.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Task $task)
     {
-        if (auth()->id() !== $task->created_by_id) {
-            abort(403);
-        }
-
         $task->labels()->detach();
-
         $task->delete();
 
-        flash('Задача успешно удалена')->success();
+        flash(__('Задача успешно удалена'))->success();
 
         return redirect()->route('tasks.index');
     }
