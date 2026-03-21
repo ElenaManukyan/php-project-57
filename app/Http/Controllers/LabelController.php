@@ -76,13 +76,13 @@ class LabelController extends Controller implements HasMiddleware
     public function destroy(Label $label)
     {
         if ($label->tasks()->exists()) {
-            flash(__('messages.label.error'))->error();
+            flash(__('validation.label.error'))->error();
             return redirect()->route('labels.index');
         }
 
         $label->delete();
 
-        flash(__('messages.label.deleted'))->success();
+        flash(__('validation.label.deleted'))->success();
 
         return redirect()->route('labels.index');
     }
