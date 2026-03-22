@@ -33,6 +33,8 @@ class LabelController extends BaseController
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:labels',
             'description' => 'nullable|string',
+        ], [
+            'name.unique' => __('validation.label.unique'),
         ]);
 
         Label::create($validated);
@@ -51,6 +53,8 @@ class LabelController extends BaseController
         $validated = $request->validate([
             'name' => "required|string|max:255|unique:labels,name,{$label->id}",
             'description' => 'nullable|string',
+        ], [
+            'name.unique' => __('validation.label.unique'),
         ]);
 
         $label->update($validated);

@@ -59,7 +59,7 @@ class TaskController extends BaseController
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
         ], [
-            'name.unique' => __('validation.task.unique_error'),
+            'name.unique' => __('validation.task.unique'),
         ]);
 
         /** @var User $user */
@@ -99,7 +99,7 @@ class TaskController extends BaseController
             'labels' => ['nullable', 'array'],
             'labels.*' => ['exists:labels,id'],
         ], [
-            'name.unique' => __('validation.task.unique_error'),
+            'name.unique' => __('validation.task.unique'),
         ]);
 
         $task->update($validated);

@@ -50,7 +50,7 @@ class TaskStatusController extends BaseController
     public function update(Request $request, TaskStatus $taskStatus)
     {
         $validated = $request->validate([
-            'name' => "required|max:255|unique:task_statuses,name, {$taskStatus->id}",
+            'name' => "required|max:255|unique:task_statuses,name,{$taskStatus->id}",
         ], [
             'name.unique' => __('validation.status.unique'),
         ]);
