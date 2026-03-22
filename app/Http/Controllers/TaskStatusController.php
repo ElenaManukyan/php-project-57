@@ -4,23 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class TaskStatusController extends Controller implements HasMiddleware
+class TaskStatusController extends BaseController
 {
     use AuthorizesRequests;
 
-    public static function middleware(): array
+    public function __construct()
     {
-        return [
-            new Middleware('auth', except: ['index']),
-
-            new Middleware('can:create,App\Models\TaskStatus', only: ['create', 'store']),
-            new Middleware('can:update,task_status', only: ['edit', 'update']),
-            new Middleware('can:delete,task_status', only: ['destroy']),
-        ];
+        $this->authorizeResource(TaskStatus::class, 'task_status');
     }
 
     public function index()
@@ -57,7 +50,7 @@ class TaskStatusController extends Controller implements HasMiddleware
     public function update(Request $request, TaskStatus $taskStatus)
     {
         $validated = $request->validate([
-            'name' => 'required|max:255|unique:task_statuses,name,' . $taskStatus->id,
+            'name' => "required|max:255|unique:task_statuses,name, {$taskStatus->id}",
         ], [
             'name.unique' => __('validation.status.unique'),
         ]);

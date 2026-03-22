@@ -4,24 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Label;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
 
-class LabelController extends Controller implements HasMiddleware
+class LabelController extends BaseController
 {
     use AuthorizesRequests;
 
-    public static function middleware(): array
+    public function __construct()
     {
-        return [
-            new Middleware('auth', except: ['index']),
-
-            new Middleware('can:viewAny,App\Models\Label', only: ['index']),
-            new Middleware('can:create,App\Models\Label', only: ['create', 'store']),
-            new Middleware('can:update,label', only: ['edit', 'update']),
-            new Middleware('can:delete,label', only: ['destroy']),
-        ];
+        $this->authorizeResource(Label::class, 'label');
     }
 
     public function index()
@@ -41,13 +33,10 @@ class LabelController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:labels',
             'description' => 'nullable|string',
-        ], [
-            'name.unique' => __('validation.label.unique'),
         ]);
 
         Label::create($validated);
-
-        flash(__('Метка успешно создана'))->success();
+        flash(__('validation.label.created'))->success();
 
         return redirect()->route('labels.index');
     }
@@ -60,14 +49,11 @@ class LabelController extends Controller implements HasMiddleware
     public function update(Request $request, Label $label)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:labels,name,' . $label->id,
+            'name' => "required|string|max:255|unique:labels,name,{$label->id}",
             'description' => 'nullable|string',
-        ], [
-            'name.unique' => __('validation.label.unique'),
         ]);
 
         $label->update($validated);
-
         flash(__('validation.label.updated'))->success();
 
         return redirect()->route('labels.index');
@@ -81,7 +67,6 @@ class LabelController extends Controller implements HasMiddleware
         }
 
         $label->delete();
-
         flash(__('validation.label.deleted'))->success();
 
         return redirect()->route('labels.index');

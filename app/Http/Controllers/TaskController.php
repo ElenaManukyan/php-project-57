@@ -9,23 +9,16 @@ use App\Models\Label;
 use Spatie\QueryBuilder\QueryBuilder;
 use Spatie\QueryBuilder\AllowedFilter;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
-use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class TaskController extends Controller implements HasMiddleware
+class TaskController extends BaseController
 {
     use AuthorizesRequests;
 
-    public static function middleware(): array
+    public function __construct()
     {
-        return [
-            new Middleware('can:viewAny,App\Models\Task', only: ['index']),
-            new Middleware('can:view,task', only: ['show']),
-            new Middleware('can:create,App\Models\Task', only: ['create', 'store']),
-            new Middleware('can:update,task', only: ['edit', 'update']),
-            new Middleware('can:delete,task', only: ['destroy']),
-        ];
+        $this->authorizeResource(Task::class, 'task');
     }
 
     public function index(Request $request)
@@ -69,7 +62,9 @@ class TaskController extends Controller implements HasMiddleware
             'name.unique' => __('validation.task.unique_error'),
         ]);
 
-        $task = $request->user()->createdTasks()->create($validated);
+        /** @var User $user */
+        $user = $request->user();
+        $task = $user->createdTasks()->create($validated);
 
         $task->labels()->sync($request->input('labels', []));
 
@@ -97,7 +92,7 @@ class TaskController extends Controller implements HasMiddleware
     public function update(Request $request, Task $task)
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:tasks,name,' . $task->id],
+            'name' => ['required', 'string', 'max:255', "unique:tasks,name,{$task->id}"],
             'description' => ['nullable', 'string'],
             'status_id' => ['required', 'exists:task_statuses,id'],
             'assigned_to_id' => ['nullable', 'exists:users,id'],
