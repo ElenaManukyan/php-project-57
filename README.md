@@ -21,7 +21,7 @@ The project was built as a graduation project, demonstrating proficiency in the 
 * **Many-to-Many Relationships:** Implementation of a labeling system where tasks can have multiple tags.
 * **Advanced Filtering:** Powerful search and filter capabilities using `spatie/laravel-query-builder` (filter by status, author, or assignee).
 * **Access Control:** Integrated authorization logic (Policies/Gates) ensuring users can only modify their own content.
-* **Production Monitoring:** Real-time error tracking and reporting via **Rollbar**.
+* **Production Monitoring:** Real-time error tracking and reporting via **SonarQube**.
 * **Localization:** Fully translatable interface (English and Russian supported).
 
 ## Installation
