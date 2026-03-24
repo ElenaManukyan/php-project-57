@@ -62,6 +62,6 @@ class TaskStatusControllerTest extends TestCase
     public function testGuestCannotCreateStatus()
     {
         $response = $this->post(route('task_statuses.store'), ['name' => 'Аноним']);
-        $response->assertRedirect(route('login'));
+        $response->assertStatus(403);
     }
 }
